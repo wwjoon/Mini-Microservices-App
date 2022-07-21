@@ -2,19 +2,12 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const axios = require('axios');
 
-const server = {
-  Posts     : 'posts-clusterip-srv',
-  Comments  : 'comments-clusterip-srv',
-  Query     : 'query-clusterip-srv',
-  Moderation: 'moderation-clusterip-srv'
-}
-
-const port = {
-  Posts     : '4001',
-  Comments  : '4002',
-  Query     : '4003',
-  Moderation: '4004'
-}
+const config = [
+  { key: "posts"      , name: "posts-clusterip-srv" , port: "4001" },
+  { key: "comments"   , name: "comments-srv"        , port: "4002" },
+  { key: "query"      , name: "query-srv"           , port: "4003" },
+  { key: "moderation" , name: "moderation-srv"      , port: "4004" }
+];
 
 const app = express();
 app.use(bodyParser.json());
@@ -26,10 +19,9 @@ app.post('/events', (req, res) => {
 
   events.push(event);
 
-  axios.post(`http://${server.Posts}:${port.Posts}/events`     , event).catch((err) => { console.log(err.message) });
-  // axios.post(`http://${server.Comments}:${port.Comments}/events`  , event).catch((err) => { console.log(err.message) });
-  // axios.post(`http://${server.Query}:${port.Query}/events`     , event).catch((err) => { console.log(err.message) });
-  // axios.post(`http://${server.Moderation}:${port.Moderation}/events`, event).catch((err) => { console.log(err.message) });
+  config.map((server) => {
+    axios.post(`http://${server.name}:${server.port}/events`, event).catch((err) => { console.log(err.message) });
+  });
 
   res.send({ status: 'OK' });
 });

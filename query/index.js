@@ -51,7 +51,7 @@ app.post('/events', (req, res) => {
 app.listen(4003, async () => {
   console.log("Listening on 4003");
   try {
-    const res = await axios.get("http://localhost:4005/events");
+    const res = await axios.get("http://event-bus-srv:4005/events");
  
     for (let event of res.data) {
       console.log("Processing event:", event.type);
