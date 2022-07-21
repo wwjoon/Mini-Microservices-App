@@ -39,5 +39,6 @@ app.post('/events', (req, res) => {
 });
 
 app.listen(4001, () => {
+  console.log('2022-07-21 18:30');
   console.log('Listening on 4001');
 });
