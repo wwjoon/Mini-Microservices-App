@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 const CommentList = ({ comments }) => {
   const renderedComments = comments.map((comment) => {
@@ -13,7 +13,7 @@ const CommentList = ({ comments }) => {
         break;
       case 'rejected':
         content = 'This comment has been rejected';
-        break;    
+        break;
       default:
         content = 'This comment is unclear';
         break;

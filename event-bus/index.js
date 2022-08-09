@@ -3,10 +3,10 @@ const bodyParser = require('body-parser');
 const axios = require('axios');
 
 const config = [
-  { key: "posts"      , name: "posts-clusterip-srv" , port: "4001" },
-  { key: "comments"   , name: "comments-srv"        , port: "4002" },
-  { key: "query"      , name: "query-srv"           , port: "4003" },
-  { key: "moderation" , name: "moderation-srv"      , port: "4004" }
+  { key: 'posts', name: 'posts-clusterip-srv', port: '4001' },
+  { key: 'comments', name: 'comments-srv', port: '4002' },
+  { key: 'query', name: 'query-srv', port: '4003' },
+  { key: 'moderation', name: 'moderation-srv', port: '4004' },
 ];
 
 const app = express();
@@ -20,7 +20,11 @@ app.post('/events', (req, res) => {
   events.push(event);
 
   config.map((server) => {
-    axios.post(`http://${server.name}:${server.port}/events`, event).catch((err) => { console.log(err.message) });
+    axios
+      .post(`http://${server.name}:${server.port}/events`, event)
+      .catch((err) => {
+        console.log(err.message);
+      });
   });
 
   res.send({ status: 'OK' });

@@ -8,7 +8,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-const commentsByPostId = {};  
+const commentsByPostId = {};
 
 app.get('/posts/:id/comments', (req, res) => {
   res.send(commentsByPostId[req.params.id] || []);
@@ -16,7 +16,7 @@ app.get('/posts/:id/comments', (req, res) => {
 
 app.post('/posts/:id/comments', async (req, res) => {
   const commentId = randomBytes(4).toString('hex'); // hex, 16진수
-  const { content }  = req.body;
+  const { content } = req.body;
 
   const comments = commentsByPostId[req.params.id] || [];
 
@@ -30,8 +30,8 @@ app.post('/posts/:id/comments', async (req, res) => {
       id: commentId,
       content,
       postId: req.params.id,
-      status: 'pending'
-    }
+      status: 'pending',
+    },
   });
 
   res.status(201).send(comments);
@@ -42,13 +42,13 @@ app.post('/events', async (req, res) => {
 
   const { type, data } = req.body;
 
-  if ( type === 'CommentModerated' ) {
+  if (type === 'CommentModerated') {
     const { postId, id, status, content } = data;
 
     const comments = commentsByPostId[postId];
 
-    const comment = comments.find(comment => {
-      return comment.id = id;
+    const comment = comments.find((comment) => {
+      return (comment.id = id);
     });
     comment.status = status;
 
@@ -58,8 +58,8 @@ app.post('/events', async (req, res) => {
         id,
         status,
         postId,
-        content
-      }
+        content,
+      },
     });
   }
 

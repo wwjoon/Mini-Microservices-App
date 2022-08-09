@@ -8,8 +8,11 @@ app.use(bodyParser.json());
 app.post('/events', async (req, res) => {
   const { type, data } = req.body;
 
-  if ( type === 'CommentCreated' ) {
-    const status = data.content.includes('bad') || data.content.includes('sad') ? 'rejected' : 'approved';
+  if (type === 'CommentCreated') {
+    const status =
+      data.content.includes('bad') || data.content.includes('sad')
+        ? 'rejected'
+        : 'approved';
 
     await axios.post('http://event-bus-srv:4005/events', {
       type: 'CommentModerated',
@@ -17,8 +20,8 @@ app.post('/events', async (req, res) => {
         id: data.id,
         postId: data.postId,
         status,
-        content: data.content
-      }
+        content: data.content,
+      },
     });
   }
 
@@ -26,5 +29,5 @@ app.post('/events', async (req, res) => {
 });
 
 app.listen(4004, () => {
-    console.log('Listening on 4004');
+  console.log('Listening on 4004');
 });
